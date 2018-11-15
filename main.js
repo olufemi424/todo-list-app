@@ -5,7 +5,7 @@ document.querySelector('form').addEventListener('submit', getFib);
 
 
 
-
+window.addEventListener('click', outSideClick);
 
 
 
@@ -48,10 +48,14 @@ function getFib(e){
         }
         fibValue.value = '';
         document.getElementById('output').innerHTML = output;
-
     }
+}
 
-
+//listen for outside event click
+function outSideClick(e){
+    if (e.target != fibValue){
+       getFib(e);
+    }
 }
 
 
