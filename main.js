@@ -1,62 +1,63 @@
 
-var fibValue = document.getElementById('fibValue');
-
-document.querySelector('form').addEventListener('submit', getFib);
 
 
 
-window.addEventListener('click', outSideClick);
+$(document).ready(function(){
+    // init id
+    $.id = 0
+    
+    //event listener on button
+    $('#btn').click(function(e){
+        e.preventDefault()
 
+        //get input value and assign each a unique id
+        $.text = $('#inputValue').val()
+        $.date = new Date()
+        $.id += $.date.getTime()
 
-
-function getFib(e){
-    e.preventDefault();
-
-    if (isNaN(fibValue.value) || fibValue.value == null || fibValue.value == ''){
-        alert('Pls enter a number!');
+        //check if input value if valid
+    if($.text.length === 0 || $.text.length <= 2 ){
+        alert("Pls Enter a task")
     }else{
-        //varible declrtion
-        var a,b,n, result;
-        //set number of fib result
-        n = fibValue.value;
-        //fib starts with 0, 1, 1
-        arr = [1]
-        //  first fib num
-        a=0;
-        //second fib num
-        b=1;
-        //third fib num
-        result=b;
-
-        //loop thru 
-        for(var i = 1; i < n; i++){
-            //set the third to the sume of first and the second
-            result = a + b;
-            //then the first becomes the second
-            a= b;
-            //the second becomes the third
-            b= result;
-            //push into array
-            arr.push(b);
+        //print out input
+        $('#content #to-do').append(
+            $('<li>').append($.text).addClass("pl-5 bg-primary rounded-left py-2 my-2 text-white").attr('id', $.id));
         }
 
-        var output = `<h4 id="fabinputValue" class= "py-3">Your entered: ${fibValue.value}</h4>
-                    <p id="fabNum">Your Fibonacci: </p>`;
-        for(var i in arr){
-           output +=
-           `<span class="badge badge-success p-2 m-2"> " ${arr[i]} "</span>`
-        }
-        fibValue.value = '';
-        document.getElementById('output').innerHTML = output;
-    }
-}
+        //Animate
+        $("#"+ $.id).hide().slideDown(30);
 
-//listen for outside event click
-function outSideClick(e){
-    if (e.target != fibValue){
-       getFib(e);
-    }
-}
+        //reset input field
+        $('#inputValue').val('')
+
+    });
+       
+
+        //delete item
+        $("#to-do").click(function(e){
+        e.preventDefault();
+        //get the id of event item
+        $.delete = $(e.target).attr('id');
+
+        //get the html and set it to the accomplished item
+        $.deleteItemHtml = $('#'+($.delete)).html();
+            
+        $('#content #done').append(
+            $('<li>').append(
+                ` <i class="fas fa-check mr-4"></i>`).append( $.deleteItemHtml).addClass("pl-2 bg-success rounded-right py-2 my-2 text-white")
+            );
+
+
+        //delete item wi
+        $.deleteItem = $('#'+($.delete))
+                
+        $.deleteItem.remove('')
+                    
+        })
+
+})
+
+
 
 
 
