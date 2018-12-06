@@ -7,7 +7,7 @@ $(document).ready(function(){
     $.id = 0
     
     //event listener on button
-    $('#btn').click(function(e){
+    $('form').on('click', "#btn", function(e){
         e.preventDefault()
 
         //get input value and assign each a unique id
@@ -25,7 +25,7 @@ $(document).ready(function(){
         }
 
         //Animate
-        $("#"+ $.id).hide().slideDown(30);
+        $("#"+ $.id).hide().slideDown(60);
 
         //reset input field
         $('#inputValue').val('')
@@ -34,26 +34,29 @@ $(document).ready(function(){
        
 
         //delete item
-        $("#to-do").click(function(e){
-        e.preventDefault();
-        //get the id of event item
-        $.delete = $(e.target).attr('id');
+        $("#to-do").on('click', 'li', function(e){
+            e.preventDefault();
+            //get the id of event item
+            $.itemId = $(e.target).attr('id');
 
-        //get the html and set it to the accomplished item
-        $.deleteItemHtml = $('#'+($.delete)).html();
-            
-        $('#content #done').append(
-            $('<li>').append(
-                ` <i class="fas fa-check mr-4"></i>`).append( $.deleteItemHtml).addClass("pl-2 bg-success rounded-right py-2 my-2 text-white")
-            );
+            // console.log($(this))
+
+            // get the html and set it to the accomplished item
+            $.deleteItemHtml = $('#'+($.itemId)).html();
+
+            $('#content #done').append(
+                $('<li>').append(
+                    ` <i class="fas fa-check mr-4"></i>`).append( $.deleteItemHtml).addClass("pl-2 bg-success rounded-right py-2 my-2 text-white")
+                );
 
 
-        //delete item wi
-        $.deleteItem = $('#'+($.delete))
-                
-        $.deleteItem.remove('')
+            // delete item 
+            $.deleteItem = $('#'+($.itemId))
+                    
+            $.deleteItem.remove('')
                     
         })
+
 
 })
 
